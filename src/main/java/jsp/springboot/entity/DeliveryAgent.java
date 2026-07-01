@@ -22,8 +22,7 @@ public class DeliveryAgent {
 	private Integer rating;
 	
 	// one to many relationship with the shipment to be included
-	
-	
+
 	public Integer getAgentId() {
 		return agentId;
 	}

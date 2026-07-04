@@ -1,6 +1,8 @@
 package jsp.springboot.entity;
 
-import java.time.DateTimeException;
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,5 +21,49 @@ public class Payment {
 	private Double amount;
 	private PaymentMethod paymentMethod;
 	private PaymentStatus paymentStatus;
+	
+	@CreationTimestamp
+	private LocalDateTime paymentTime;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public PaymentStatus getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+	public LocalDateTime getPaymentTime() {
+		return paymentTime;
+	}
+
+	public void setPaymentTime(LocalDateTime paymentTime) {
+		this.paymentTime = paymentTime;
+	}
+	
 	
 }

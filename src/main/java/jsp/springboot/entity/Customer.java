@@ -1,10 +1,14 @@
 package jsp.springboot.entity;
 
+
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Customer {
@@ -21,7 +25,8 @@ public class Customer {
 	private String address;
 	
 	//mapping to be included later with the Shipment
-	
+	@OneToMany(mappedBy = "customer")
+	private List<Shipment> shipments;
 	
 	public Integer getId() {
 		return id;

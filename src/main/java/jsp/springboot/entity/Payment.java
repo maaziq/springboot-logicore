@@ -4,10 +4,13 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jsp.springboot.enums.PaymentMethod;
 import jsp.springboot.enums.PaymentStatus;
 
@@ -24,6 +27,10 @@ public class Payment {
 	
 	@CreationTimestamp
 	private LocalDateTime paymentTime;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn
+	private Shipment shipment;
 
 	public Integer getId() {
 		return id;

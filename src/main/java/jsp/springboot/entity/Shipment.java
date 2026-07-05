@@ -3,6 +3,7 @@ package jsp.springboot.entity;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -16,6 +17,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jsp.springboot.enums.ShipmentStatus;
 
 @Entity
@@ -39,6 +42,24 @@ public class Shipment {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn
 	private Customer customer;
+	
+	@OneToOne(mappedBy = "shipment")
+	private Payment payment;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn
+	private DeliveryAgent deliveryAgent;
+	
+	
+	@OneToOne(mappedBy = "shipment")
+	private PackageEntity packageEntity;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn
+	private Warehouse warehouse;
+	
+	@OneToMany(mappedBy = "shipment")
+	private List<TrackingHistory> trackingHistory;
 	
 	
 	public Integer getId() {

@@ -1,17 +1,21 @@
 package jsp.springboot.entity;
 
+
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class DeliveryAgent {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer agentId;
+	private Integer id;
 	
 	private String agentName;
 	@Column(unique = true)
@@ -22,12 +26,15 @@ public class DeliveryAgent {
 	private Integer rating;
 	
 	// one to many relationship with the shipment to be included
+	@OneToMany(mappedBy = "deliveryAgent")
+	private List<Shipment> shipment;
+	
 
-	public Integer getAgentId() {
-		return agentId;
+	public Integer getId() {
+		return id;
 	}
-	public void setAgentId(Integer agentId) {
-		this.agentId = agentId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	public String getAgentName() {
 		return agentName;

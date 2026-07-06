@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import jsp.springboot.dto.ResponseStructure;
 import jsp.springboot.entity.Customer;
 import jsp.springboot.service.CustomerService;
@@ -41,5 +41,26 @@ public class CustomerController {
 	public ResponseEntity<ResponseStructure<Customer>> findById(@PathVariable Integer id){
 		
 		return new ResponseEntity<>(customerService.findById(id), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/email/{email}")
+	public ResponseEntity<ResponseStructure<Customer>> findByEmail(@PathVariable String email){
+		
+		return new ResponseEntity<>(customerService.findByEmail(email), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/contact/{contact}")
+	public ResponseEntity<ResponseStructure<Customer>> findByContact(@PathVariable Long contact){
+		
+		return new ResponseEntity<>(customerService.findByContact(contact), HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<ResponseStructure<Customer>> updateCustomer(@RequestBody Customer customer){
+		
+		return new ResponseEntity<>(customerService.UpdateCustomer(customer), HttpStatus.OK);
 	}
 }

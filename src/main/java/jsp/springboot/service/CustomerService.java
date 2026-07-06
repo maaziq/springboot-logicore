@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import jsp.springboot.dto.ResponseStructure;
 import jsp.springboot.entity.Customer;
 import jsp.springboot.exception.IdNotFoundException;
+import jsp.springboot.exception.NoRecordFoundException;
 import jsp.springboot.repo.CustomerRepository;
 
 @Service
@@ -61,5 +62,58 @@ public class CustomerService {
 	}
 	
 	
+	public ResponseStructure<Customer> findByEmail(String email){
+		
+		ResponseStructure<Customer> res = new ResponseStructure<>();
+		Optional<Customer> opt = customerRepository.findByEmail(email);
+		
+		if(opt.isPresent()) {
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("fetching customer by email");
+			res.setData(opt.get());
+			
+			return res;
+		}
+		else
+			throw new NoRecordFoundException("No record found by email");
+	}
+	
+	
+	public ResponseStructure<Customer> findByContact(Long contact){
+		
+		ResponseStructure<Customer> res = new ResponseStructure<>();
+		Optional<Customer> opt = customerRepository.findByContact(contact);
+		
+		if(opt.isPresent()) {
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("fetching customer by contact");
+			res.setData(opt.get());
+			
+			return res;
+		}
+		else
+			throw new NoRecordFoundException("No record found by email");
+	} 
+	
+	
+	public ResponseStructure<Customer> UpdateCustomer(Customer customer){
+		
+		ResponseStructure<Customer> res = new ResponseStructure<>();
+		
+		if(customer.getId()==null)
+			throw new IdNotFoundException("Id not found in the db");
+		
+		Optional<Customer> opt = customerRepository.findById(customer.getId());
+		
+		if(opt.isPresent()) {
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("customer updated sucessfully!");
+			res.setData(customerRepository.save(customer));
+			
+			return res;
+		}
+		else 
+			throw new NoRecordFoundException("No record found in the db");
+	}
 	
 }

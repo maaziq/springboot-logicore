@@ -55,8 +55,9 @@ public class CustomerService {
 			
 			return res;
 		}
-		else
+		else {
 			throw new IdNotFoundException("Id not found in the db");
+		}
 	}
 	
 	

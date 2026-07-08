@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,4 +43,31 @@ public class WarehouseController {
 		
 		return new ResponseEntity<>(warehouseService.getWarehouse(id), HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/location/{location}")
+	public ResponseEntity<ResponseStructure<Warehouse>> getByloc(@PathVariable String location){
+		
+		return new ResponseEntity<>(warehouseService.getByLocation(location), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/capacity/{capacity}")
+	public ResponseEntity<ResponseStructure<List<Warehouse>>> getByCap(@PathVariable Long capacity){
+		
+		return new ResponseEntity<>(warehouseService.getByCapacity(capacity), HttpStatus.OK);
+	}
+	
+	@PutMapping("/update")
+	public ResponseEntity<ResponseStructure<Warehouse>> updateWarehouse(@RequestBody Warehouse warehouse){
+		
+		return new ResponseEntity<>(warehouseService.updateWarehouse(warehouse), HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<ResponseStructure<String>> deleteWarehouse(@PathVariable Integer id){
+		
+		return new ResponseEntity<>(warehouseService.deleteWarehouse(id), HttpStatus.OK);
+	}
+	
 }

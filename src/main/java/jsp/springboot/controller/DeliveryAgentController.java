@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,5 +66,25 @@ public class DeliveryAgentController {
 		return new ResponseEntity<>(deliveryAgentService.getByRatingGreater(rating), HttpStatus.OK);
 	}
 	
+	
+	@PutMapping()
+	public ResponseEntity<ResponseStructure<DeliveryAgent>> updateAgent(@RequestBody DeliveryAgent deliveryAgent){
+		
+		return new ResponseEntity<>(deliveryAgentService.updateAgent(deliveryAgent), HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<ResponseStructure<String>> deleteAgent(@PathVariable Integer id){
+		
+		return new ResponseEntity<>(deliveryAgentService.deleteAgent(id), HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/{id}/{avialablity}")
+	public ResponseEntity<ResponseStructure<DeliveryAgent>> updateAgentAvialablity(@PathVariable Integer id, @PathVariable Boolean avialablity){
+		
+		return new ResponseEntity<>(deliveryAgentService.updateAgentAvability(id, avialablity), HttpStatus.OK);
+	}
 	
 }

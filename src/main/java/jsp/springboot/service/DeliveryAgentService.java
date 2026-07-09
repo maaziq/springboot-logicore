@@ -107,4 +107,69 @@ public class DeliveryAgentService {
 	}
 	
 	
+	public ResponseStructure<DeliveryAgent> updateAgent(DeliveryAgent agent){
+		
+		ResponseStructure<DeliveryAgent> res = new ResponseStructure<>();
+		
+		if(agent.getId() == null) 
+			throw new IdNotFoundException("Id is not avialable");
+		
+		Optional<DeliveryAgent> opt = deliveryAgentRepo.findById(agent.getId());
+		
+		if(opt.isPresent()) {
+		res.setStatusCode(HttpStatus.OK.value());
+		res.setMessage("Delivery agent is updated sucessfully!!");
+		res.setData(deliveryAgentRepo.save(agent));
+		
+		return res;
+		
+		}
+		
+		else
+			throw new NoRecordFoundException("No agent is persent in the db!");
+	}
+	
+	
+	public ResponseStructure<String> deleteAgent(Integer id){
+		
+		ResponseStructure<String> res = new ResponseStructure<>();
+		
+		Optional<DeliveryAgent> opt = deliveryAgentRepo.findById(id);
+		
+		if(opt.isPresent()) {
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("Agent deleted sucessfully");
+			res.setData("Deleted");
+			deliveryAgentRepo.delete(opt.get());
+			
+			return res;
+		}
+		else
+			throw new NoRecordFoundException("no record is avialable");
+	}
+	
+	
+	public ResponseStructure<DeliveryAgent> updateAgentAvability(Integer id, Boolean avialability){
+		
+		ResponseStructure<DeliveryAgent> res = new ResponseStructure<>();
+		
+		Optional<DeliveryAgent> opt = deliveryAgentRepo.findById(id);
+		
+		if(opt.isPresent()) {
+			
+	        DeliveryAgent agent = opt.get();
+	        agent.setAvialability(avialability);
+	        DeliveryAgent updatedAgent = deliveryAgentRepo.save(agent);
+	        
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("Avialabilty updated sucessfully");
+			opt.get().setAvialability(avialability);
+			res.setData(updatedAgent);
+			
+			return res;
+		}
+		else
+			throw new NoRecordFoundException("agent is not present!");
+	}
+	
 }

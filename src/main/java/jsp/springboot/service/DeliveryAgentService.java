@@ -163,7 +163,6 @@ public class DeliveryAgentService {
 	        
 			res.setStatusCode(HttpStatus.OK.value());
 			res.setMessage("Avialabilty updated sucessfully");
-			opt.get().setAvialability(avialability);
 			res.setData(updatedAgent);
 			
 			return res;

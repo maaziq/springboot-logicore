@@ -1,6 +1,5 @@
 package jsp.springboot.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,8 +23,8 @@ public class PackageEntity {
 	private Boolean fragile;
 	private String dimention;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+	@OneToOne
+	@JoinColumn(name = "shipment_id")
 	private Shipment shipment;
 	
 	
@@ -53,7 +52,13 @@ public class PackageEntity {
 	public void setDimention(String dimention) {
 		this.dimention = dimention;
 	}
-	
+	public Shipment getShipment() {
+	    return shipment;
+	}
+
+	public void setShipment(Shipment shipment) {
+	    this.shipment = shipment;
+	}
 	
 	
 }

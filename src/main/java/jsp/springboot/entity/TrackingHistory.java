@@ -1,6 +1,5 @@
 package jsp.springboot.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,8 +23,8 @@ public class TrackingHistory {
 	@Enumerated(EnumType.STRING)
 	private TrackingStatus status;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+	@ManyToOne
+	@JoinColumn(name = "shipment_id")
 	private Shipment shipment;
 	
 
@@ -61,5 +60,12 @@ public class TrackingHistory {
 		this.status = status;
 	}
 	
+	public Shipment getShipment() {
+	    return shipment;
+	}
+
+	public void setShipment(Shipment shipment) {
+	    this.shipment = shipment;
+	}
 	
 }

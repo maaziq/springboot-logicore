@@ -39,24 +39,24 @@ public class Shipment {
 	@Enumerated(EnumType.STRING)
 	private ShipmentStatus shipmentStatus;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
-	
-	@OneToOne(mappedBy = "shipment")
-	private Payment payment;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn
-	private DeliveryAgent deliveryAgent;
-	
-	
-	@OneToOne(mappedBy = "shipment")
-	private PackageEntity packageEntity;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+
+	@ManyToOne
+	@JoinColumn(name = "warehouse_id")
 	private Warehouse warehouse;
+
+	@ManyToOne
+	@JoinColumn(name = "delivery_agent_id")
+	private DeliveryAgent deliveryAgent;
+
+	@OneToOne(mappedBy = "shipment", cascade = CascadeType.ALL)
+	private Payment payment;
+
+	@OneToOne(mappedBy = "shipment", cascade = CascadeType.ALL)
+	private PackageEntity packageEntity;
+
 	
 	@OneToMany(mappedBy = "shipment")
 	private List<TrackingHistory> trackingHistory;

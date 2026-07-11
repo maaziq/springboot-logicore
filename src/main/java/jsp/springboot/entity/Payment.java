@@ -4,8 +4,9 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,14 +23,17 @@ public class Payment {
 	private Integer id;
 	
 	private Double amount;
+	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod;
+
+	@Enumerated(EnumType.STRING)
 	private PaymentStatus paymentStatus;
 	
 	@CreationTimestamp
 	private LocalDateTime paymentTime;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+	@OneToOne
+	@JoinColumn(name = "shipment_id")
 	private Shipment shipment;
 
 	public Integer getId() {
@@ -70,6 +74,14 @@ public class Payment {
 
 	public void setPaymentTime(LocalDateTime paymentTime) {
 		this.paymentTime = paymentTime;
+	}
+	
+	public Shipment getShipment() {
+	    return shipment;
+	}
+
+	public void setShipment(Shipment shipment) {
+	    this.shipment = shipment;
 	}
 	
 	

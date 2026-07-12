@@ -110,6 +110,42 @@ public class Shipment {
 	public void setShipmentStatus(ShipmentStatus shipmentStatus) {
 		this.shipmentStatus = shipmentStatus;
 	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
+	}
+	public DeliveryAgent getDeliveryAgent() {
+		return deliveryAgent;
+	}
+	public void setDeliveryAgent(DeliveryAgent deliveryAgent) {
+		this.deliveryAgent = deliveryAgent;
+	}
+	public Payment getPayment() {
+		return payment;
+	}
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+	public PackageEntity getPackageEntity() {
+		return packageEntity;
+	}
+	public void setPackageEntity(PackageEntity packageEntity) {
+		this.packageEntity = packageEntity;
+	}
+	public List<TrackingHistory> getTrackingHistory() {
+		return trackingHistory;
+	}
+	public void setTrackingHistory(List<TrackingHistory> trackingHistory) {
+		this.trackingHistory = trackingHistory;
+	}
 	
 	
 	

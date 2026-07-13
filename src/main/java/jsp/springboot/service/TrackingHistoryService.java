@@ -8,12 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import jsp.springboot.dto.ResponseStructure;
-import jsp.springboot.entity.Shipment;
 import jsp.springboot.entity.TrackingHistory;
 import jsp.springboot.enums.TrackingStatus;
 import jsp.springboot.exception.IdNotFoundException;
 import jsp.springboot.exception.NoRecordFoundException;
-import jsp.springboot.repo.ShipmentRepository;
 import jsp.springboot.repo.TrackingHistoryRepository;
 
 @Service
@@ -22,8 +20,7 @@ public class TrackingHistoryService {
 	@Autowired
 	private TrackingHistoryRepository trackingHistoryRepository;
 	
-	@Autowired
-	private ShipmentRepository shipmentRepo;
+	
 	
 	
 	public ResponseStructure<TrackingHistory> getByIdTracking(Integer id){
@@ -60,14 +57,10 @@ public class TrackingHistoryService {
 	public ResponseStructure<List<TrackingHistory>> getTrackingHistoryByTrackingNumber(Long trackingNumber){
 		
 		ResponseStructure<List<TrackingHistory>> res = new ResponseStructure<>();
-        
-		Shipment shipment = shipmentRepo.findByTrackingNumber(trackingNumber)
-                .orElseThrow(() -> new IdNotFoundException("Tracking number not found"));
-		
-		
+
 			res.setStatusCode(HttpStatus.OK.value());
 			res.setMessage("feting data from shipment");
-			res.setData(shipment.getTrackingHistory());
+			res.setData(trackingHistoryRepository.findByShipmentTrackingNumber(trackingNumber));
 		
 			return res;
 	}
@@ -79,7 +72,7 @@ public class TrackingHistoryService {
 		
 		res.setStatusCode(HttpStatus.OK.value());
 		res.setMessage("fetching TrackingHistory By Status!!");
-		res.setData(trackingHistoryRepository.findByTrackingStatus(status));
+		res.setData(trackingHistoryRepository.findByStatus(status));
 		
 		return res;
 	}
@@ -89,17 +82,12 @@ public class TrackingHistoryService {
 		
 		ResponseStructure<List<TrackingHistory>> res = new ResponseStructure<>();
 		
-		Optional<Shipment> opt = shipmentRepo.findById(id);
-		if(opt.isPresent()) {
-			
-			res.setStatusCode(HttpStatus.OK.value());
-			res.setMessage("Fetch by shipment");
-			res.setData(opt.get().getTrackingHistory());
-			
-			return res;
-		}
-		else
-			throw new NoRecordFoundException("No record is present ");
+		res.setStatusCode(HttpStatus.OK.value());
+		res.setMessage("fetching TrackingHistory By shipment!!");
+		res.setData(trackingHistoryRepository.findByShipmentId(id));
+		
+		return res;
+		
 	}
 	
 	

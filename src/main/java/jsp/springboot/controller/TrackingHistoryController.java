@@ -62,7 +62,6 @@ public class TrackingHistoryController {
 	@PutMapping("/update")
 	public ResponseEntity<ResponseStructure<TrackingHistory>> updateTrackingHistoy(@PathVariable TrackingHistory history){
 		
-		return new ResponseEntity<>(trackingHistoryService.updateTracking(history), HttpStatus.OK);
-		
+		return new ResponseEntity<>(trackingHistoryService.updateTracking(history), HttpStatus.OK);	
 	}
 }

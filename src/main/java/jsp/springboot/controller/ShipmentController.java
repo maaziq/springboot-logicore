@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,6 +58,27 @@ public class ShipmentController {
 	public ResponseEntity<ResponseStructure<Shipment>> updateStatus(@PathVariable Integer id, @PathVariable ShipmentStatus status){
 		
 		return new ResponseEntity<>(shipmentService.updateStatus(id, status), HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/agent/{shipmentId}/{agentId}")
+	public ResponseEntity<ResponseStructure<Shipment>> updateAgent(@PathVariable Integer shipmentId, @PathVariable Integer agentId){
+		
+		return new ResponseEntity<>(shipmentService.assignedDeliveryAgent(shipmentId, agentId), HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/warehouse/{shipmentId}/{warehouseId}")
+	public ResponseEntity<ResponseStructure<Shipment>> updateWarehouse(@PathVariable Integer shipmentId, @PathVariable Integer warehouseId){
+		
+		return new ResponseEntity<>(shipmentService.assignedWarehouse(shipmentId, warehouseId), HttpStatus.OK);
+	}
+	
+	
+	@DeleteMapping("id/{id}")
+	public ResponseEntity<ResponseStructure<String>> deleteShipment(@PathVariable Integer id){
+		
+		return new ResponseEntity<ResponseStructure<String>>(shipmentService.deleteShipment(id), HttpStatus.OK);
 	}
 	
 } 

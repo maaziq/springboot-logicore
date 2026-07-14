@@ -8,17 +8,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import jsp.springboot.dto.ResponseStructure;
+import jsp.springboot.entity.DeliveryAgent;
 import jsp.springboot.entity.Shipment;
+import jsp.springboot.entity.Warehouse;
 import jsp.springboot.enums.ShipmentStatus;
 import jsp.springboot.exception.IdNotFoundException;
 import jsp.springboot.exception.NoRecordFoundException;
+import jsp.springboot.repo.DeliveryAgentRepository;
 import jsp.springboot.repo.ShipmentRepository;
+import jsp.springboot.repo.WarehouseRepository;
 
 @Service
 public class ShipmentService {
 	
 	@Autowired
 	private ShipmentRepository shipmentRepository;
+	
+	@Autowired
+	private DeliveryAgentRepository deliveryAgentRepository;
+	
+	@Autowired
+	private WarehouseRepository warehouseRepository;
+	
 	
 	public ResponseStructure<Shipment> createShipment(Shipment shipment){
 		
@@ -105,6 +116,65 @@ public class ShipmentService {
 	}
 	
 	
+	public ResponseStructure<Shipment> assignedDeliveryAgent(Integer shipmentId, Integer agentId){
+		
+		Shipment shipment = shipmentRepository.findById(shipmentId)
+                .orElseThrow(() -> new IdNotFoundException("Shipment Id not found"));
+
+        DeliveryAgent deliveryAgent = deliveryAgentRepository.findById(agentId)
+                .orElseThrow(() -> new IdNotFoundException("Delivery Agent Id not found"));
+
+        shipment.setDeliveryAgent(deliveryAgent);
+        Shipment updatedShipment = shipmentRepository.save(shipment);
+
+        ResponseStructure<Shipment> response = new ResponseStructure<>();
+
+	        response.setStatusCode(HttpStatus.OK.value());
+	        response.setMessage("Delivery Agent Assigned Successfully");
+	        response.setData(updatedShipment);
+	
+	        return response;	
+	}
+	
+	
+	public ResponseStructure<Shipment> assignedWarehouse(Integer shipmentId, Integer warehouseId){
+		
+		Shipment shipment = shipmentRepository.findById(shipmentId)
+                .orElseThrow(() -> new IdNotFoundException("Shipment Id not found"));
+		
+		Warehouse warehouse = warehouseRepository.findById(warehouseId)
+				.orElseThrow(() -> new IdNotFoundException("WarehouseId not found"));
+		
+		shipment.setWarehouse(warehouse);
+		Shipment updatedShipment = shipmentRepository.save(shipment);
+		
+		 ResponseStructure<Shipment> response = new ResponseStructure<>();
+
+	        response.setStatusCode(HttpStatus.OK.value());
+	        response.setMessage("Delivery Agent Assigned Successfully");
+	        response.setData(updatedShipment);
+
+	        return response;
+	}
+	
+	
+	public ResponseStructure<String> deleteShipment(Integer id){
+		
+		ResponseStructure<String> res = new ResponseStructure<>();
+		
+		Optional<Shipment> opt = shipmentRepository.findById(id);
+		
+		if(opt.isPresent()) {
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("Deleting shipment");
+			shipmentRepository.delete(opt.get());
+			res.setData("Deleted!!");
+			
+			return res;
+		}
+		else
+			throw new IdNotFoundException("Id not found");
+	}
 	
 	
 }

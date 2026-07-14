@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -34,6 +36,7 @@ public class Payment {
 	
 	@OneToOne
 	@JoinColumn(name = "shipment_id")
+	@JsonBackReference
 	private Shipment shipment;
 
 	public Integer getId() {

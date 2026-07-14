@@ -1,5 +1,7 @@
 package jsp.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,6 +27,7 @@ public class TrackingHistory {
 	
 	@ManyToOne
 	@JoinColumn(name = "shipment_id")
+	@JsonBackReference
 	private Shipment shipment;
 	
 

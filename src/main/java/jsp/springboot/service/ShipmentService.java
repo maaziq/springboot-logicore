@@ -8,12 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import jsp.springboot.dto.ResponseStructure;
+import jsp.springboot.entity.Customer;
 import jsp.springboot.entity.DeliveryAgent;
 import jsp.springboot.entity.Shipment;
 import jsp.springboot.entity.Warehouse;
 import jsp.springboot.enums.ShipmentStatus;
 import jsp.springboot.exception.IdNotFoundException;
 import jsp.springboot.exception.NoRecordFoundException;
+import jsp.springboot.repo.CustomerRepository;
 import jsp.springboot.repo.DeliveryAgentRepository;
 import jsp.springboot.repo.ShipmentRepository;
 import jsp.springboot.repo.WarehouseRepository;
@@ -29,6 +31,9 @@ public class ShipmentService {
 	
 	@Autowired
 	private WarehouseRepository warehouseRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
 	
 	
 	public ResponseStructure<Shipment> createShipment(Shipment shipment){
@@ -177,4 +182,88 @@ public class ShipmentService {
 	}
 	
 	
+	public ResponseStructure<List<Shipment>> getShipmentOfCustomer(Integer customerId){
+		
+		ResponseStructure<List<Shipment>> res = new ResponseStructure<>();
+		
+		Optional<Customer> opt = customerRepository.findById(customerId);
+		
+		if(opt.isPresent()) {
+			
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("fetching shipments of customer");
+			res.setData(shipmentRepository.findByCustomer(opt.get()));
+			
+			return res;
+		}
+		else
+			throw new NoRecordFoundException("No customer found with this Id!!");
+	}
+	
+	
+	
+
+	public ResponseStructure<List<Shipment>> getShipmentOfWarehouse(Integer warehouseId){
+		
+		ResponseStructure<List<Shipment>> res = new ResponseStructure<>();
+		
+		Optional<Warehouse> opt = warehouseRepository.findById(warehouseId);
+		
+		if(opt.isPresent()) {
+			
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("fetching shipments of warehouse");
+			res.setData(shipmentRepository.findByWarehouse(opt.get()));
+			
+			return res;
+		}
+		else
+			throw new NoRecordFoundException("No Warehouse found with this Id!!");
+	}
+	
+	
+	public ResponseStructure<List<Shipment>> getShipmentAssignedDeliveryAgent(Integer agentId){
+		
+		ResponseStructure<List<Shipment>> res = new ResponseStructure<>();
+		
+		Optional<DeliveryAgent> opt = deliveryAgentRepository.findById(agentId);
+		
+		
+		if(opt.isPresent()) {
+			
+			res.setStatusCode(HttpStatus.OK.value());
+			res.setMessage("fetching shipments assigined to Delivery Agent!");
+			res.setData(shipmentRepository.findByDeliveryAgent(opt.get()));
+			
+			return res;
+		}
+		else
+			throw new NoRecordFoundException("No DeliveryAgent found with this Id!!");
+	}
+	
+	
+	public ResponseStructure<List<Shipment>> getBySourceAndDestination(String source, String destination){
+		
+		ResponseStructure<List<Shipment>> res = new ResponseStructure<>();
+		
+		res.setStatusCode(HttpStatus.OK.value());
+		res.setMessage("fetching shipment by source and destination");
+		res.setData(shipmentRepository.findBySourceAndDestination(source, destination));
+		
+		return res;
+	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+

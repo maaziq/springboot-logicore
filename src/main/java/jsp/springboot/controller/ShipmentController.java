@@ -81,5 +81,55 @@ public class ShipmentController {
 		return new ResponseEntity<ResponseStructure<String>>(shipmentService.deleteShipment(id), HttpStatus.OK);
 	}
 	
+	
+	@GetMapping("/customer/{customerId}")
+	public ResponseEntity<ResponseStructure<List<Shipment>>> getShipmentOfCustomer(@PathVariable Integer customerId){
+		
+		return new ResponseEntity<>(shipmentService.getShipmentOfCustomer(customerId), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/warehouse/{warehouseId}")
+	public ResponseEntity<ResponseStructure<List<Shipment>>> getShipmentOfWarehouse(@PathVariable Integer warehouseId){
+		
+		return new ResponseEntity<>(shipmentService.getShipmentOfWarehouse(warehouseId), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/delivery/{agentId}")
+	public ResponseEntity<ResponseStructure<List<Shipment>>> getShipmentAssignedToDeliveryAgent(@PathVariable Integer agentId){
+		
+		return new ResponseEntity<>(shipmentService.getShipmentAssignedDeliveryAgent(agentId), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/loc/{source}/{destination}")
+	public ResponseEntity<ResponseStructure<List<Shipment>>> getBySourceAndDestination(@PathVariable String source, @PathVariable String destination){
+		
+		return new ResponseEntity<>(shipmentService.getBySourceAndDestination(source, destination), HttpStatus.OK);
+	}
+	
+	
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

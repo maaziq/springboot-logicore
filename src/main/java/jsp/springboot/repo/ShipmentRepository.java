@@ -1,6 +1,7 @@
 package jsp.springboot.repo;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Integer> {
 	List<Shipment> findByDeliveryAgent(DeliveryAgent deliveryAgent);
 	
 	List<Shipment> findBySourceAndDestination(String source, String destination);
+	
+	List<Shipment> findByDeliveryDate(Date date);
 	
 }
  

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -116,4 +119,27 @@ public class CustomerService {
 			throw new NoRecordFoundException("No record found in the db");
 	}
 	
+	
+	public ResponseStructure<Page<Customer>> getByPaginationAndSorting(Integer pn, Integer ps, String field){
+		
+		ResponseStructure<Page<Customer>> res = new ResponseStructure<>();
+		
+		res.setStatusCode(HttpStatus.OK.value());
+		res.setMessage("fetching by paginationa and sorting");
+		res.setData(customerRepository.findAll(PageRequest.of(pn, ps, Sort.by(field).ascending())));
+		
+		return res;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+

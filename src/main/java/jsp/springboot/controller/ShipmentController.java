@@ -1,8 +1,10 @@
 package jsp.springboot.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -110,7 +112,22 @@ public class ShipmentController {
 	}
 	
 	
+	@GetMapping("/date/{date}")
+	public ResponseEntity<ResponseStructure<List<Shipment>>> getByDeliveryDate(@PathVariable Date date){
+		
+		return new ResponseEntity<>(shipmentService.getByDeliveryDate(date), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/page/{pn}/{ps}/{field}")
+	public ResponseEntity<ResponseStructure<Page<Shipment>>> getByPaginationAndSorting(@PathVariable Integer pn, @PathVariable Integer ps, @PathVariable String field){
+		
+		return new ResponseEntity<>(shipmentService.getByPaginationAndSorting(pn, ps, field), HttpStatus.OK);
+	}
+	
+	
 } 
+
 
 
 

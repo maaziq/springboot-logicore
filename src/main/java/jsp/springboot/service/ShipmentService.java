@@ -1,9 +1,13 @@
 package jsp.springboot.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -254,6 +258,28 @@ public class ShipmentService {
 	}
 	
 	
+	public ResponseStructure<List<Shipment>> getByDeliveryDate(Date date){
+		
+		ResponseStructure<List<Shipment>> res = new ResponseStructure<>();
+		
+		res.setStatusCode(HttpStatus.OK.value());
+		res.setMessage("fetching shipment by delivery date");
+		res.setData(shipmentRepository.findByDeliveryDate(date));
+		
+		return res;
+	}
+	
+	
+	public ResponseStructure<Page<Shipment>> getByPaginationAndSorting(Integer pn, Integer ps, String field){
+		
+		ResponseStructure<Page<Shipment>> res = new ResponseStructure<>();
+		
+		res.setStatusCode(HttpStatus.OK.value());
+		res.setMessage("Fetching by paginationa and sorting");
+		res.setData(shipmentRepository.findAll(PageRequest.of(pn, ps, Sort.by(field))));
+		
+		return res;
+	}
 	
 }
 

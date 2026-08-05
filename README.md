@@ -2,7 +2,7 @@
 
 Logistic Management system :
 
-# 🚚 LogiCore – Smart Logistics & Shipment Management System
+# 🚚 LogiCore – Smart Logistics & Shipment Management System :–––
 
 > *Every package has a destination. Every shipment has a story. LogiCore was built to make sure that story reaches its destination smoothly.*
 
